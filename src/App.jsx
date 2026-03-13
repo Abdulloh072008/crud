@@ -18,6 +18,17 @@ const App = () => {
       price: "$130",
       about: "Classic basketball sneaker with durable leather and timeless style.",
       status: false,
+      name: "Orzu",
+      age: 21,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkiIFjCOZ-mMeqxd2ryrneiHedE8G9S0AboA&s",
+      status: true
+    },
+    {
+      id: 2,
+      name: "Omar",
+      age: 21,
+      img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkiIFjCOZ-mMeqxd2ryrneiHedE8G9S0AboA&s",
+      status: false
     },
   ])
 
@@ -52,6 +63,68 @@ const App = () => {
       price: event.target["price"].value,
       about: event.target["about"].value,
       status: event.target["status"].value == "insale",
+  let [ageEdit, setageEdit] = useState("")
+  let [imgEdit, setimgEdit] = useState("")
+  let [idx, setidx] = useState(null)
+  let [statueEdit, setstatusEdit] = useState(null)
+
+  let [search, setsearch] = useState("")
+  let [select ,setselect] = useState("")
+
+  let showEdit = ((user) => {
+    setnameEdit(user.name)
+    setageEdit(user.age)
+    setimgEdit(user.img)
+    setidx(user.id)
+    setstatusEdit(user.status)
+      name: "Abdulloh",
+      age: 21,
+      status: true,
+      email: "abdu@gmail.com",
+      city: "Dushanbe"
+    },
+    {
+      id: 2,
+      name: "Orzu",
+      age: 24,
+      status: false,
+      email: "orzu@gmail.com",
+      city: "Dushanbe"
+    },
+  ])
+
+  let [nameEdit, setNameEdit] = useState("")
+  let [ageEdit, setAgeEdit] = useState("")
+  let [emailEdit, setEmailEdit] = useState("")
+  let [cityEdit, setCityEdit] = useState("")
+  let [idx, setidx] = useState(null)
+  let [statusEdit, setStatusEdit] = useState(null)
+
+  let [search, setsearch] = useState("")
+  let [selete, setselete] = useState("")
+
+  let showEdit = ((user) => {
+    setNameEdit(user.name)
+    setAgeEdit(user.age)
+    setEmailEdit(user.email)
+    setCityEdit(user.city)
+    setidx(user.id)
+    setStatusEdit(user.status)
+  })
+
+
+  let handleSubmit = ((event) => {
+    event.preventDefault()
+    let obj = {
+      id: data.length + 1,
+      img: event.target["avatar"].value,
+      name: event.target["name"].value,
+      age: event.target["age"].value,
+      name: event.target["name"].value,
+      age: event.target["age"].value,
+      email: event.target["email"].value,
+      city: event.target["city"].value,
+      status: event.target["status"].value == "active",
     }
     setData([...data, obj])
   })
@@ -77,6 +150,48 @@ const App = () => {
     let change = data.map((user)=>{
       if(user.id == id){
         return {
+  let handleSubmit1 = ((event) => {
+    event.preventDefault()
+    let obj = {
+      name: nameEdit,
+      age: ageEdit,
+      img: imgEdit,
+      id: idx,
+      status: statueEdit == "active",
+    }
+    setData(data.map((user) => user.id == idx ? obj : user))
+  })
+
+  let deleteusers = ((id) => {
+    let deleteuser = data.filter((user) => user.id != id)
+    setData(deleteuser)
+  })
+
+  let checkbox = (id) => {
+    let change = data.map((user) => {
+      if (user.id == id) {
+        return {
+          ...user,
+          status: !user.status
+      name:nameEdit,
+      age:ageEdit,
+      email:emailEdit,
+      city:cityEdit,
+      id:idx,
+      status:statusEdit == "active"
+    }
+    setData(data.map((user)=> user.id == idx ? obj : user))
+  })
+
+  let deleteuser = ((id) => {
+    let newData = data.filter((user) => user.id != id)
+    setData(newData)
+  })
+
+  let changeStatus=(id)=>{
+    let change = data.map((user)=>{
+      if(user.id == id){
+        return{
           ...user,
           status:!user.status
         }
@@ -154,6 +269,176 @@ const App = () => {
           }
         </div>
       </div>
+    })
+    setData(change)
+  }
+
+
+
+
+
+
+
+  return (
+    <>
+      <div className='p-10'>
+
+        <div>
+          <form onSubmit={handleSubmit} action="">
+            <input name='avatar' className='border p-2 rounded-2xl ' type="text" placeholder='Avatar' />
+            <input name='name' className='border p-2 rounded-2xl ' type="text" placeholder='Name' />
+            <input name='age' className='border p-2 rounded-2xl ' type="text" placeholder='Age' />
+            <select className='border p-2 rounded-2xl ' name="status" id="">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <button className='bg-[blue] py-2 px-5 border rounded-2xl text-white' type='submit'>Add</button>
+          </form>
+        </div>
+
+        <div>
+          <form onSubmit={handleSubmit1} action="">
+            <input value={imgEdit} onChange={(user) => setimgEdit(user.target.value)} name='avatar' className='border p-2 rounded-2xl ' type="text" placeholder='Avatar' />
+            <input value={nameEdit} onChange={(user) => setnameEdit(user.target.value)} name='name' className='border p-2 rounded-2xl ' type="text" placeholder='Name' />
+            <input value={ageEdit} onChange={(user) => setageEdit(user.target.value)} name='age' className='border p-2 rounded-2xl ' type="text" placeholder='Age' />
+            <select value={statueEdit} onChange={(user) => setstatusEdit(user.target.value)} className='border p-2 rounded-2xl ' name="status" id="">
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <button className='bg-[blue] py-2 px-5 border rounded-2xl text-white' type='submit'>Edit</button>
+          </form>
+        </div>
+
+        <div>
+          <input value={search} onChange={(user) => setsearch(user.target.value)} name='' className='border p-2 rounded-2xl ' type="search" placeholder='Name...' />
+          <select value={select} onChange={(user) => setselect(user.target.value)} className='border p-2 rounded-2xl ' name="" id="">
+            <option value="">All</option>
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+        </div>
+
+      </div>
+
+      <table className='w-[50%] m-auto'>
+        <thead>
+          <tr>
+            <th className='border p-2 text-start w-10'>No</th>
+            <th className='border p-2 text-start'>User</th>
+            <th className='border p-2 text-start'>Age</th>
+            <th className='border p-2 text-start w-30'>Status</th>
+            <th className='border p-2 text-start w-60'>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {
+            data
+            .filter((user)=> user.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()))
+            .filter((user)=> user.status.toString().includes(select))
+            .map((user) => {
+              return <tr key={user.id}>
+                <td className='border p-2'>{user.id}</td>
+                <td className='border p-2'>
+                  <div className='flex gap-2 items-center'>
+                    <img className='w-8' src={user.img} alt="" />
+                    {user.name}
+                  </div>
+                </td>
+                <td className='border p-2'>{user.age}</td>
+                <td className='border p-2'>{user.status ? "Active" : "Inactive"}</td>
+                <td className='border p-2'>
+                  <div className='flex gap-2'>
+                    <button onClick={() => deleteusers(user.id)} className='bg-[red] py-1 px-7 rounded-2xl text-white'>Delete</button>
+                    <button onClick={() => showEdit(user)} className='bg-[blue] py-1 px-5 rounded-2xl text-white'>Edit</button>
+                    <input onClick={() => checkbox(user.id)} type="checkbox" checked={user.status} />
+                  </div>
+                </td>
+              </tr>
+            })
+          }
+        </tbody>
+      </table>
+  return (
+    <>
+      <section className='max-w-300 m-auto'>
+
+        <div className='flex gap-30 items-end'>
+          <div className='mt-20'>
+            <form onSubmit={handleSubmit} action="" className='flex flex-col w-[130%] gap-2'>
+              <input name='name' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='Name' />
+              <input name='age' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='Age' />
+              <input name='email' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='Email' />
+              <input name='city' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='City' />
+              <select className='border rounded-2xl p-2' name="status">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+              <button className='bg-[blue] p-2 rounded-2xl text-white' type='submit'>Add</button>
+            </form>
+          </div>
+
+          <div className='mt-20'>
+            <form onSubmit={handleSubmit1} action="" className='flex flex-col w-[130%] gap-2'>
+              <input value={nameEdit} onChange={(user) => setNameEdit(user.target.value)} name='name' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='Name' />
+              <input value={ageEdit} onChange={(user) => setAgeEdit(user.target.value)} name='age' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='Age' />
+              <input value={emailEdit} onChange={(user) => setEmailEdit(user.target.value)}t name='email' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='Email' />
+              <input value={cityEdit} onChange={(user) => setCityEdit(user.target.value)} name='city' className='border rounded-2xl p-2 text-[20px]' type="text" placeholder='City' />
+              <select value={statusEdit} onChange={(user) => setStatusEdit(user.target.value)} className='border rounded-2xl p-2' name="status">
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+              </select>
+              <button className='bg-[blue] p-2 rounded-2xl text-white' type='submit'>Edit</button>
+            </form>
+          </div>
+
+          <div>
+            <input value={search} onChange={(user) => setsearch(user.target.value)} className='border p-2 rounded-2xl ' type="search" placeholder='Name...'/>
+            <select value={selete} onChange={(user) => setselete(user.target.value)} className='border p-2 rounded-2xl ml-3' name="" id="">
+              <option value="">All</option>
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
+        </div>
+
+        <table className='w-full mt-10'>
+          <thead>
+            <tr>
+              <th className='border p-2 text-start'>Nmae</th>
+              <th className='border p-2 text-start'>Age</th>
+              <th className='border p-2 text-start'>Email</th>
+              <th className='border p-2 text-start'>City</th>
+              <th className='border p-2 text-start w-30'>Status</th>
+              <th className='border p-2 text-start'>Action</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {
+              data
+              .filter((user)=> user.status.toString().includes(selete))
+              .filter((user) => user.name.toLocaleLowerCase().includes(search.trim().toLocaleLowerCase()))
+              .map((user) => {
+                return <tr key={user.id}>
+                  <td className='border p-2 '>{user.name}</td>
+                  <td className='border p-2 '>{user.age}</td>
+                  <td className='border p-2 '>{user.email}</td>
+                  <td className='border p-2 '>{user.city}</td>
+                  <td className={`${user.status ? "text-[green]" : "text-[red]"} border border-[black] p-2 `}>{user.status ? "Active" : "Inctive"}</td>
+                  <td className='border p-2 w-70'>
+                    <div className='flex gap-2'>
+                      <button onClick={() => deleteuser(user.id)} className='bg-[red] text-white px-7 py-1 rounded-2xl'>Delete</button>
+                      <button onClick={() => showEdit(user)} className='bg-[blue] py-1 px-5 text-white rounded-2xl'>Edit</button>
+                      <input onClick={() => changeStatus(user.id)} type="checkbox" checked={user.status} />
+                    </div>
+                  </td>
+                </tr>
+              })
+            }
+          </tbody>
+        </table>
+      </section>
     </>
   )
 }
